@@ -1,0 +1,1 @@
+/data		*(rw,all_squash,anonuid=1002)
