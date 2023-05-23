@@ -3,7 +3,8 @@ version: '2'
 services:
   mongodb:
     # https://github.com/bitnami/bitnami-docker-mongodb
-    image: docker.io/bitnami/mongodb:4.4.11-debian-10-r12
+    image: docker.io/bitnami/mongodb:5.0.16-debian-11-r2
+    restart: ${RESTART_POLICY:-no}
     ports:
       - "27017:27017"
     volumes:
@@ -16,6 +17,7 @@ services:
   postgresql:
     # https://github.com/bitnami/bitnami-docker-postgresql
     image: docker.io/bitnami/postgresql:13
+    restart: ${RESTART_POLICY:-no}
     ports:
       - '5432:5432'
     volumes:
@@ -26,27 +28,30 @@ services:
       POSTGRESQL_PASSWORD: ${POSTGRESQL__PASSWORD}
       ALLOW_EMPTY_PASSWORD: "no"
 
-  nfs:
-    # https://hub.docker.com/r/erichough/nfs-server
-    image: erichough/nfs-server
-    cap_add:
-      - SYS_ADMIN
-    ports:
-      - "2049:2049"
-      - "2049:2049/udp"
-      - "111:111"
-      - "111:111/udp"
-      - "32765:32765"
-      - "32765:32765/udp"
-      - "32767:32767"
-      - "32767:32767/udp"
-    volumes:
-      - './exports.txt:/etc/exports:ro'
-      - '/data:/data:rw'
+  # If the external services are being run on the same server as KubeAdm then
+  # this section can remain as commented out.
+#  nfs:
+#    # https://hub.docker.com/r/erichough/nfs-server
+#    image: erichough/nfs-server
+#    cap_add:
+#      - SYS_ADMIN
+#    ports:
+#      - "2049:2049"
+#      - "2049:2049/udp"
+#      - "111:111"
+#      - "111:111/udp"
+#      - "32765:32765"
+#      - "32765:32765/udp"
+#      - "32767:32767"
+#      - "32767:32767/udp"
+#    volumes:
+#      - './exports.txt:/etc/exports:ro'
+#      - '/data:/data:rw'
 
   rabbitmq:
     # https://github.com/bitnami/bitnami-docker-rabbitmq
     image: docker.io/bitnami/rabbitmq:3.9.16-debian-10-r0
+    restart: ${RESTART_POLICY:-no}
     ports:
       - '4369:4369'
       - '5551:5551'
@@ -66,6 +71,7 @@ services:
   redis:
     # https://github.com/bitnami/bitnami-docker-redis
     image: docker.io/bitnami/redis:6.2.6-debian-10-r97
+    restart: ${RESTART_POLICY:-no}
     environment:
       REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
       REDIS_REPLICATION_MODE: master
