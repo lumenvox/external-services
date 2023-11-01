@@ -70,7 +70,7 @@ services:
 
   redis:
     # https://github.com/bitnami/bitnami-docker-redis
-    image: docker.io/bitnami/redis:6.2.6-debian-10-r97
+    image: docker.io/bitnami/redis:7.0.13-debian-11-r26
     restart: ${RESTART_POLICY:-no}
     environment:
       REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
