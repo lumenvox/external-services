@@ -13,6 +13,11 @@ services:
       MONGODB_ROOT_USER: ${MONGODB__ROOT_USER}
       MONGODB_ROOT_PASSWORD: ${MONGODB__ROOT_PASSWORD}
       ALLOW_EMPTY_PASSWORD: "no"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   postgresql:
     # https://github.com/bitnami/bitnami-docker-postgresql
@@ -27,6 +32,11 @@ services:
       POSTGRESQL_USERNAME: ${POSTGRESQL__USERNAME}
       POSTGRESQL_PASSWORD: ${POSTGRESQL__PASSWORD}
       ALLOW_EMPTY_PASSWORD: "no"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   # If the external services are being run on the same server as KubeAdm then
   # this section can remain as commented out.
@@ -47,6 +57,11 @@ services:
 #    volumes:
 #      - './exports.txt:/etc/exports:ro'
 #      - '/data:/data:rw'
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
 
   rabbitmq:
     # https://github.com/bitnami/bitnami-docker-rabbitmq
@@ -65,9 +80,14 @@ services:
       RABBITMQ_USERNAME: ${RABBITMQ__USERNAME}
       RABBITMQ_PASSWORD: ${RABBITMQ__PASSWORD}
       RABBITMQ_PLUGINS: rabbitmq_management
-      RABBITMQ_DISK_FREE_ABSOLUTE_LIMIT: 2GB  
+      RABBITMQ_DISK_FREE_ABSOLUTE_LIMIT: 2GB
     volumes:
       - 'rabbitmq_data:/bitnami/rabbitmq/mnesia'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   redis:
     # https://github.com/bitnami/bitnami-docker-redis
@@ -81,6 +101,11 @@ services:
       - '6379:6379'
     volumes:
       - 'redis_data:/bitnami/redis/data'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   mongodb_data:
