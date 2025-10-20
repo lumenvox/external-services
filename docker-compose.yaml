@@ -89,14 +89,11 @@ services:
   redis:
     image: docker.io/redis:8.0.3
     restart: ${RESTART_POLICY:-no}
-    environment:
-      REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
-      REDIS_REPLICATION_MODE: master
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     ports:
       - '6379:6379'
     volumes:
-      - 'redis_data:/bitnami/redis/data'
+      - 'redis_data:/data'
     logging:
       driver: "json-file"
       options:
