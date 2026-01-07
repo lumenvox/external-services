@@ -2,12 +2,12 @@ version: '2'
 
 services:
   mongodb:
-    image: docker.io/mongo:8.0.11
+    image: docker.io/mongo:8.0.17
     restart: ${RESTART_POLICY:-no}
     ports:
       - "27017:27017"
     volumes:
-      - 'mongodb_data:/bitnami/mongodb'
+      - 'mongodb_data:/data/db'
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
